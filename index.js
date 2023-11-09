@@ -27,6 +27,29 @@ app.get('/test', async(req,res)=>{
     }
 })
 
+// Verify database connection
+pool.connect((err, client, release) => {
+    if (err) {
+        console.error("Error connecting to the database:", err);
+    } else {
+        console.log("Connected to the database");
+    }
+    release(); // Release the client back to the pool
+});
+
+// Define a route to verify the database connection
+app.get("/verify", (req, res) => {
+    pool.query("SELECT 1", (err, result) => {
+        if (err) {
+            console.error("Error executing test query:", err);
+            res.status(500).json({ error: "Internal Server Error" });
+        } else {
+            console.log("Database connection verified");
+            res.json({ message: "Database connection verified" });
+        }
+    });
+});
+
 // create a todo
 app.post("/todos", async(req,res)=>{
     try {
