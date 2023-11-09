@@ -33,6 +33,7 @@ app.post("/todos", async(req,res)=>{
         console.log(req.body)
         const {descript} = req.body;
         const newTodo = await pool.query("INSERT INTO todos(descript) values ($1)", [descript]) 
+        return res.sendStatus(201)
     } catch (err) {
         console.error(err.message);
     }
