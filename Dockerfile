@@ -1,16 +1,16 @@
-FROM ubuntu:23.04
+FROM node:14.18.1
 
-RUN apt update && \
-    apt install -y nodejs npm git 
+WORKDIR /app
 
-# RUN pacman -Scc --noconfirm
+ARG CACHEBUST
+RUN echo $CACHEBUST
 
-RUN npm install -g yarn
+# Clone the repository and install dependencies
+RUN git clone https://github.com/sri-karthick-k/react-todo-server.git . && \
+    npm install
 
-RUN git clone https://github.com/sri-karthick-k/react-todo-server.git
+# Expose the port
+EXPOSE 4000
 
-WORKDIR /react-todo-server
-
-RUN yarn install
-
-CMD [ "node", "index.js" ]
+# Run the application
+CMD ["node", "index.js"]

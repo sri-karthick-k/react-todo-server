@@ -19,7 +19,7 @@ app.use(express.json()) //used to access req.body
 // Routes 
 
 // test route
-app.get('/test', async(req,res)=>{
+app.get('/api/test', async(req,res)=>{
     try {
         return res.json({msg: "Hello"})
     } catch (err) {
@@ -38,7 +38,7 @@ pool.connect((err, client, release) => {
 });
 
 // Define a route to verify the database connection
-app.get("/verify", (req, res) => {
+app.get("/api/verify", (req, res) => {
     pool.query("SELECT 1", (err, result) => {
         if (err) {
             console.error("Error executing test query:", err);
@@ -51,7 +51,7 @@ app.get("/verify", (req, res) => {
 });
 
 // create a todo
-app.post("/todos", async(req,res)=>{
+app.post("/api/todos", async(req,res)=>{
     try {
         console.log(req.body)
         const {descript} = req.body;
@@ -65,7 +65,7 @@ app.post("/todos", async(req,res)=>{
 
 
 // get all todo
-app.get("/todos", async(req, res)=>{
+app.get("/api/todos", async(req, res)=>{
     try {
         const printTodos = await pool.query("SELECT *FROM todos")
         res.json(printTodos.rows)
@@ -75,7 +75,7 @@ app.get("/todos", async(req, res)=>{
 })
 
 // get a todo
-app.get("/todo/:id", async(req,res)=>{
+app.get("/api/todo/:id", async(req,res)=>{
     try {
         const {id} = req.params
         const printodo = await pool.query("SELECT *FROM todos WHERE id=$1", [id])
@@ -85,7 +85,7 @@ app.get("/todo/:id", async(req,res)=>{
     }
 })
 // update a todo
-app.put("/todo/:id", async(req, res)=>{
+app.put("/api/todo/:id", async(req, res)=>{
     const {id} = req.params
     const {descript} = req.body
     try {
@@ -96,7 +96,7 @@ app.put("/todo/:id", async(req, res)=>{
     }
 })
 // delete a todo
-app.delete("/todo/:id", async(req, res)=>{
+app.delete("/api/todo/:id", async(req, res)=>{
     const {id} = req.params;
     try {
          await pool.query("DELETE FROM todos WHERE id = $1", [id])
