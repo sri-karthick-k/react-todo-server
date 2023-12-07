@@ -42,7 +42,7 @@ app.get("/api/verify", (req, res) => {
     pool.query("SELECT 1", (err, result) => {
         if (err) {
             console.error("Error executing test query:", err);
-            res.status(500).json({ error: "Internal Server Error" });
+            res.status(500).json({ error: "Internal Server Error", msg:err.message});
         } else {
             console.log("Database connection verified");
             res.json({ message: "Database connection verified" });
