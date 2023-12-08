@@ -107,6 +107,6 @@ app.delete("/api/todo/:id", async(req, res)=>{
 })
 
 app.listen(4000, ()=>{
-    console.log("server started at port 4000 routed to 4001");
+    console.log("server started at port 4000");
 
 })
